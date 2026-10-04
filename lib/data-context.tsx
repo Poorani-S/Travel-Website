@@ -151,8 +151,8 @@ export function DataProvider({ children }: { children: ReactNode }) {
   }
 
   const cancelBooking = (bookingId: string) => {
-    const updated = bookings.map((b: Booking) =>
-      b.id === bookingId ? { ...b, status: "cancelled" } : b,
+    const updated = bookings.map((b: Booking): Booking =>
+      b.id === bookingId ? { ...b, status: "cancelled" as const } : b,
     )
     setBookings(updated)
     localStorage.setItem("bookings", JSON.stringify(updated))

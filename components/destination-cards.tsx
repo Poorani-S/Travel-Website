@@ -6,12 +6,17 @@ import { Button } from "@/components/ui/button"
 import { MapPin, Calendar } from "lucide-react"
 import { useImageContext } from "@/lib/image-context"
 
-export default function DestinationCards({ destinations, onSelectDestination }) {
-  const [hoveredId, setHoveredId] = useState(null)
-  const [imageErrors, setImageErrors] = useState({})
+interface DestinationCardsProps {
+  destinations: any[]
+  onSelectDestination?: (destination: any) => void
+}
+
+export default function DestinationCards({ destinations, onSelectDestination }: DestinationCardsProps) {
+  const [hoveredId, setHoveredId] = useState<string | number | null>(null)
+  const [imageErrors, setImageErrors] = useState<Record<string | number, boolean>>({})
   const { imageUpdates } = useImageContext()
 
-  const handleImageError = (id) => {
+  const handleImageError = (id: string | number) => {
     setImageErrors((prev) => ({ ...prev, [id]: true }))
   }
 
@@ -63,7 +68,7 @@ export default function DestinationCards({ destinations, onSelectDestination }) 
 
           <CardFooter className="pt-0 flex gap-2 flex-col sm:flex-row">
             <Button
-              onClick={() => onSelectDestination(destination)}
+              onClick={() => onSelectDestination?.(destination)}
               className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground text-xs sm:text-sm"
             >
               Book Now

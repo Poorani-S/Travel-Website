@@ -6,7 +6,13 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 
-export default function BookingModal({ destination, onClose, onSubmit }) {
+interface BookingModalProps {
+  destination: any
+  onClose: () => void
+  onSubmit: (destination: any, formData: any) => void
+}
+
+export default function BookingModal({ destination, onClose, onSubmit }: BookingModalProps) {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -20,13 +26,15 @@ export default function BookingModal({ destination, onClose, onSubmit }) {
 
   const [error, setError] = useState("")
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
     setError("")
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
 
     if (!formData.firstName || !formData.lastName || !formData.email || !formData.checkIn || !formData.checkOut) {
@@ -180,7 +188,7 @@ export default function BookingModal({ destination, onClose, onSubmit }) {
                 onChange={handleInputChange}
                 placeholder="Any special requests or preferences..."
                 className="w-full mt-1 px-3 py-2 text-xs sm:text-sm border border-input rounded-md bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-                rows="3"
+                rows={3}
               />
             </div>
           </div>

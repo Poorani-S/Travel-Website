@@ -11,6 +11,7 @@ const _geist = Geist({ subsets: ["latin"] })
 const _geistMono = Geist_Mono({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://travelhub.com"),
   title: "TravelHub - Book Your Next Adventure",
   description:
     "Discover and book amazing travel destinations around the world. Explore beaches, mountains, cities, and more with easy booking and 24/7 support.",
@@ -89,7 +90,7 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <link rel="canonical" href="https://travelhub.com" />
       </head>
-      <body className={`${_geist.className} antialiased`}>
+      <body className={`${_geist.className} antialiased`} suppressHydrationWarning>
         <AuthProvider>
           <DataProvider>
             <ImageProvider>

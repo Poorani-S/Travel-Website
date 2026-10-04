@@ -1,13 +1,28 @@
 "use client"
 
 import { useState } from "react"
-import { destinations } from "@/lib/data"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { useImageContext } from "@/lib/image-context"
 import Link from "next/link"
 import { ArrowLeft, Trash2, Copy } from "lucide-react"
+
+export interface Destination {
+  id: number
+  title: string
+  country: string
+  image: string
+}
+
+export const destinations: Destination[] = [
+  { id: 1, title: "Bali", country: "Indonesia", image: "/bali.jpg" },
+  { id: 2, title: "Istanbul", country: "Turkey", image: "/istanbul.jpg" },
+  { id: 3, title: "Ladakh & Kashmir", country: "India", image: "/ladakh.jpg" },
+  { id: 4, title: "Paris", country: "France", image: "/paris.jpg" },
+  { id: 5, title: "Krabi", country: "Thailand", image: "/krabi.jpg" },
+  { id: 6, title: "Rome", country: "Italy", image: "/rome1.jpg" },
+]
 
 export default function AdminImagesPage() {
   const { imageUpdates, updateImage, saveImages, resetImages, isSaved } = useImageContext()
@@ -94,7 +109,7 @@ export default function AdminImagesPage() {
                     <Input
                       id={`url-${destination.id}`}
                       type="url"
-                      placeholder="C:\Users\Admin\Downloads\travel-journal-app (3)\public\ladakh.jpg"
+                      placeholder="https://images.unsplash.com/... or /image.jpg"
                       value={imageUpdates[destination.id] || destination.image || ""}
                       onChange={(e) => updateImage(destination.id, e.target.value)}
                       className="flex-1"

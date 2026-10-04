@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import Link from "next/link"
 import Header from "@/components/header"
 import {Footer} from "@/components/footer"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -8,7 +9,7 @@ import { Button } from "@/components/ui/button"
 import { Calendar, Users, Trash2, Mail, Phone } from "lucide-react"
 
 export default function BookingsPage() {
-  const [bookings, setBookings] = useState([])
+  const [bookings, setBookings] = useState<any[]>([])
 
   useEffect(() => {
     const stored = localStorage.getItem("travel-bookings")
@@ -17,14 +18,14 @@ export default function BookingsPage() {
     }
   }, [])
 
-  const handleDeleteBooking = (id) => {
+  const handleDeleteBooking = (id: string | number) => {
     const updated = bookings.filter((b) => b.id !== id)
     setBookings(updated)
     localStorage.setItem("travel-bookings", JSON.stringify(updated))
   }
 
-  const calculateDays = (checkIn, checkOut) => {
-    return Math.ceil((new Date(checkOut) - new Date(checkIn)) / (1000 * 60 * 60 * 24))
+  const calculateDays = (checkIn: string, checkOut: string) => {
+    return Math.ceil((new Date(checkOut).getTime() - new Date(checkIn).getTime()) / (1000 * 60 * 60 * 24))
   }
 
   return (
@@ -44,11 +45,8 @@ export default function BookingsPage() {
             <div className="text-6xl mb-4">✈️</div>
             <h2 className="text-2xl font-bold text-foreground mb-2">No bookings yet</h2>
             <p className="text-muted-foreground mb-6">Start planning your next adventure!</p>
-            <Button
-              className="bg-primary hover:bg-primary/90 text-primary-foreground"
-              onClick={() => (window.location.href = "/")}
-            >
-              Browse Destinations
+            <Button asChild className="bg-primary hover:bg-primary/90 text-primary-foreground">
+              <Link href="/">Browse Destinations</Link>
             </Button>
           </div>
         ) : (
